@@ -9,7 +9,7 @@
         * [Data Collection](https://github.com/HonkinWaffles/Wi-Fi-Ducky-Scripts/blob/main/Data-Collection/Data%20Collection)
         * [Netcat Reverse Shell](https://github.com/HonkinWaffles/Wi-Fi-Duck-Scripts/blob/main/Reverse%20Shell/Netcat%20Reverse%20Shell)
 1. Reverse Shell
-    * [Netcat Reverse Shell](https://github.com/HonkinWaffles/Wi-Fi-Duck-Scripts/blob/main/Reverse%20Shell/NetCat%20Reverse%20Shell)
+    * [Netcat Reverse Shell](https://github.com/HonkinWaffles/Wi-Fi-Duck-Scripts/blob/main/Reverse%20Shell/Netcat%20Reverse%20Shell)
     * [Netcat Reverse Shell (Admin)](https://github.com/HonkinWaffles/Wi-Fi-Duck-Scripts/blob/main/Reverse%20Shell/Netcat%20Reverse%20Shell%20(Admin))
 1. [Disable Windows Defender](https://github.com/HonkinWaffles/Wi-Fi-Ducky-Scripts/blob/main/Disable%20Windows%20Defender)
     * Required: Default settings for Defender
