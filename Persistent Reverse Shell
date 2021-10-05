@@ -10,7 +10,7 @@ REM <HOSTED_URL> - URL to where nc64.exe is hosted
 REM <IP_ADDR> - Change the IP to your listener IP
 REM <PORT>  - Port of listener
 
-REM If the script has run succesfully you can run "nc -nv <TARGET_IP_ADDR> <PORT>" to connect
+REM If the script has run successfully you can run "nc -nv <TARGET_IP_ADDR> <PORT>" to connect
 
 DEFAULTDELAY 150
 
