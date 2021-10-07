@@ -24,7 +24,7 @@
 1. Disable + Enable UAC
     * [Disable UAC](https://github.com/HonkinWaffles/Wi-Fi-Duck-Scripts/blob/main/UAC/Disable)
     * [Enable UAC](https://github.com/HonkinWaffles/Wi-Fi-Duck-Scripts/blob/main/UAC/Enable)
-
+1. [Discord Token Grabber (FTP)](https://github.com/HonkinWaffles/Wi-Fi-Duck-Scripts/blob/main/Discord%20Token%20Grabber)
 
 
 ##### Tested in Windows 11 Pro (Build 22000.194)
