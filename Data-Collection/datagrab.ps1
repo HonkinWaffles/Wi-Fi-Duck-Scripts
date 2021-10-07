@@ -38,7 +38,6 @@ $content = [System.IO.File]::ReadAllBytes("$path\$filename")
 $ftp.ContentLength = $content.Length
 $ftp.UseBinary = $true
 $ftp.UsePassive = $true
-
 $content = [System.IO.File]::ReadAllBytes("$path\$filename")
 $ftp.ContentLength = $content.Length
 
